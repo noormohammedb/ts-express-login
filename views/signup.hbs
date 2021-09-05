@@ -2,7 +2,7 @@
 <p>Welcome to {{title}}</p>
 <div class="login-box">
 
-  <form action="/login-submission" method="POST">
+  <form action="/signup-submission" method="POST">
     <div class="form" style="display: flex; flex-direction: column; ">
       <input
         type="text"
@@ -20,10 +20,10 @@
         class="text-box login-items"
       />
       <button type="submit" class="login-items login-button">
-        Login
+        {{title}}
       </button>
     </div>
 
   </form>
-  <a href="/signup" class="singup-button">signup</a>
+  <a href="/{{link}}" class="singup-button">{{link}}</a>
 </div>
