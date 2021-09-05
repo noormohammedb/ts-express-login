@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
-// const db = require("../utils/db-connection").db;
 const singupLogic = require("../utils/singupLogic");
+const loginLogic = require("../utils/loginLogic");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -20,10 +20,18 @@ router.get("/signup", function (req, res) {
   res.render("signup", hbsObj);
 });
 
-router.post("/login-submission", (req, res) => {
+router.post("/login-submission", async (req, res) => {
   console.log("login submission");
   console.log(req.body);
-  res.json({ message: "login-submission" });
+  const reqData = req.body;
+  try {
+    const response = await loginLogic(req.body);
+    console.log(response);
+    res.json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: "internal server error" });
+  }
 });
 
 router.post("/signup-submission", async (req, res) => {
@@ -37,8 +45,6 @@ router.post("/signup-submission", async (req, res) => {
     console.error(error);
     res.status(500).json({ status: "internal server error" });
   }
-
-  // res.json({ message: "signup-submission" });
 });
 
 module.exports = router;
