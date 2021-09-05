@@ -10,6 +10,7 @@ const loginLogic = async (reqData) => {
       if (user.password == reqData.password) {
         console.log("password matched");
         const resData = {
+          isLoggedin: true,
           message: "login success",
         };
         return resData;
@@ -25,7 +26,7 @@ const loginLogic = async (reqData) => {
       const resData = {
         message: "please try to signup",
       };
-      res.json(resData);
+      return resData;
     }
   } catch (error) {
     console.log("error in login db operation");

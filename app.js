@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+var session = require("express-session");
 
 const dbutil = require("./utils/db-connection");
 dbutil.dbconnect().then(() => {
@@ -23,6 +24,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  session({
+    secret: "session secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 10 * 60000 },
+  })
+);
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
