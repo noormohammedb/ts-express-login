@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
-const db = require("../utils/db-connection").db;
+// const db = require("../utils/db-connection").db;
+const singupLogic = require("../utils/singupLogic");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -29,20 +30,10 @@ router.post("/signup-submission", async (req, res) => {
   console.log("signup submission");
   console.log(req.body);
   try {
-    const user = await db
-      .collection("user")
-      .findOne({ user_name: req.body.user_name });
-    console.info("user:", user);
-    if (user) {
-      res.json({ message: "signup user exist" });
-      console.log("user exist in db");
-    } else {
-      await db.collection("user").insertOne(req.body);
-      console.log("db insertion done");
-      res.json({ message: "signup success" });
-    }
+    const response = await singupLogic(req.body);
+    console.log(response);
+    res.json(response);
   } catch (error) {
-    console.log("error in signup db operation");
     console.error(error);
     res.status(500).json({ status: "internal server error" });
   }
