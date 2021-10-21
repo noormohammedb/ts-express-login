@@ -1,9 +1,11 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-var session = require("express-session");
+import createError from "http-errors";
+import express, { Application, Request, Response } from "express";
+import path from "path";
+import cookieParser from "cookie-parser";
+// import morgan from "morgan";
+import morgan from "morgan";
+import session from "express-session";
+
 
 const dbutil = require("./utils/db-connection");
 dbutil.dbconnect().then(() => {
@@ -19,7 +21,7 @@ var app = express();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
-app.use(logger("dev"));
+app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -42,7 +44,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err: any, req: any, res: any, next: any) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};

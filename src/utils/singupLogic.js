@@ -1,4 +1,4 @@
-const db = require("../utils/db-connection").db;
+const db = require("./db-connection").db;
 const singupLogic = async (reqData) => {
   try {
     const user = await db
