@@ -1,10 +1,10 @@
-var express = require("express");
-var router = express.Router();
-const singupLogic = require("../utils/singupLogic");
-const loginLogic = require("../utils/loginLogic");
+import express, { Application, Request, Response } from "express";
+let router = express.Router();
+import signupLogic from "../utils/signupLogic"
+import loginLogic from "../utils/loginLogic"
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
+router.get("/", function (req: any, res: Response, next) {
   if (req.session?.data?.isLoggedin) {
     res.render("greeting", {
       title: "Login",
@@ -15,7 +15,7 @@ router.get("/", function (req, res, next) {
   }
 });
 
-router.get("/login", function (req, res, next) {
+router.get("/login", function (req: any, res: Response, next) {
   if (req.session?.data?.isLoggedin) {
     res.redirect("/");
   } else {
@@ -23,7 +23,7 @@ router.get("/login", function (req, res, next) {
   }
 });
 
-router.get("/signup", function (req, res) {
+router.get("/signup", function (req: any, res: Response) {
   const hbsObj = {
     title: "signup",
     link: "login",
@@ -38,12 +38,12 @@ router.get("/signup", function (req, res) {
 router.get("/login-submission", (req, res) => {
   res.redirect("/login");
 });
-router.post("/login-submission", async (req, res) => {
+router.post("/login-submission", async (req: any, res: Response) => {
   console.log("login submission");
   console.log(req.body);
   const reqData = req.body;
   try {
-    const response = await loginLogic(reqData);
+    const response: any = await loginLogic(reqData);
     console.log(response);
     if (response.isLoggedin) {
       req.session.data = {
@@ -65,7 +65,7 @@ router.post("/signup-submission", async (req, res) => {
   console.log("signup submission");
   console.log(req.body);
   try {
-    const response = await singupLogic(req.body);
+    const response = await signupLogic(req.body);
     console.log(response);
     res.json(response);
   } catch (error) {
@@ -88,4 +88,4 @@ router.get("/logout", (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,7 +1,7 @@
-const db = require("../utils/db-connection").db;
-const loginLogic = async (reqData) => {
+import dbutil from "./db-connection";
+const loginLogic = async (reqData: any) => {
   try {
-    const user = await db
+    const user = await dbutil.db
       .collection("user")
       .findOne({ user_name: reqData.user_name });
     if (user) {
@@ -34,4 +34,4 @@ const loginLogic = async (reqData) => {
   }
 };
 
-module.exports = loginLogic;
+export default loginLogic;

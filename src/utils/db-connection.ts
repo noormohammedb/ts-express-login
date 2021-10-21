@@ -1,11 +1,12 @@
-require("dotenv").config();
-const { MongoClient, LEGAL_TCP_SOCKET_OPTIONS } = require("mongodb");
+import * as  dotenv from "dotenv";
+dotenv.config();
+import { MongoClient } from "mongodb";
 
 const uri = process.env.DB_URI || "mongodb://127.0.0.1:27017";
 const database = process.env.DB_NAME || "login";
 const client = new MongoClient(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
 });
 
 async function dbConnection() {
@@ -39,7 +40,7 @@ const db_insertin = async () => {
   }
 };
 
-module.exports = {
+export default {
   dbconnect: dbConnection,
   db: client.db(database),
   db_insertin,

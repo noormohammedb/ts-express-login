@@ -1,7 +1,7 @@
-const db = require("./db-connection").db;
-const singupLogic = async (reqData) => {
+import dbutil from "./db-connection";
+const singupLogic = async (reqData: any) => {
   try {
-    const user = await db
+    const user = await dbutil.db
       .collection("user")
       .findOne({ user_name: reqData.user_name });
     console.info("user:", user);
@@ -11,7 +11,7 @@ const singupLogic = async (reqData) => {
         message: "signup user exist",
       };
     } else {
-      await db.collection("user").insertOne(reqData);
+      await dbutil.db.collection("user").insertOne(reqData);
       console.log("db insertion done");
       return {
         message: "signup success",
@@ -23,4 +23,4 @@ const singupLogic = async (reqData) => {
   }
 };
 
-module.exports = singupLogic;
+export default singupLogic;
