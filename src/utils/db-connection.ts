@@ -15,7 +15,8 @@ async function dbConnection() {
     return client;
   } catch (error) {
     console.log("connection error");
-    console.error(error);
+    // console.error(error);
+    throw error;
   }
 }
 

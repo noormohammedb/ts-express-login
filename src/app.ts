@@ -9,7 +9,7 @@ import session from "express-session";
 import dbutil from "./utils/db-connection"
 dbutil.dbconnect().then(() => {
   console.log("db connected");
-});
+}).catch(console.error);
 
 import indexRouter from "./routes/index"
 import usersRouter from "./routes/users"
